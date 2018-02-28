@@ -8,6 +8,7 @@ import tempfile
 import sh
 from genomeplot.prerolled import util
 
+
 def load():
 
     def anopheles_plot(chrom, subplot):
@@ -16,10 +17,9 @@ def load():
             subplot.add_layout(LinearAxis(), 'right')
 
     fasta_url = "https://www.vectorbase.org/download/anopheles-gambiae-pestchromosomesagamp4fagz"
-    path = os.path.join(tempfile.mkdtemp(), "Anopheles-gambiae-PEST_CHROMOSOMES_AgamP4.fa.gz")
+    path = os.path.join("/tmp", "Anopheles-gambiae-PEST_CHROMOSOMES_AgamP4.fa.gz")
 
     if not os.path.isfile(path):
-        print("no fasta storage dir specified, download will be required each time.")
         print("Downloading from", fasta_url, "to", path)
         urlretrieve(fasta_url, path, util.reporthook)
         fasta_fn, ext = os.path.splitext(path)
