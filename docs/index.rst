@@ -15,6 +15,24 @@ The package contains a few "prerolled" genome plots, that create the base figure
 
 .. bokeh-plot:: ../scripts/anophelesgambiae.py
 
+Or with the other prerolled GenomePlot:
+
+.. bokeh-plot::
+
+    from bokeh.plotting import figure, output_file, show
+
+    output_file("example.html")
+
+    x = [1, 2, 3, 4, 5]
+    y = [6, 7, 6, 4, 5]
+
+    p = figure(title="example", plot_width=300, plot_height=300)
+    p.line(x, y, line_width=2)
+    p.circle(x, y, size=10, fill_color="white")
+
+    show(p)
+
+
 Indices and tables
 ==================
 
