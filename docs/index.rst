@@ -18,6 +18,7 @@ The package contains a few "prerolled" genome plots, that create the base figure
 Or with the other prerolled GenomePlot:
 
 .. bokeh-plot::
+    :source-position: above
 
     from bokeh.plotting import figure, output_file, show
 
@@ -32,6 +33,9 @@ Or with the other prerolled GenomePlot:
 
     show(p)
 
+Palette
+
+.. bokeh-palette-group:: mpl
 
 Indices and tables
 ==================
