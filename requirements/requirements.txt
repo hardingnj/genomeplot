@@ -1,9 +1,4 @@
 pandas
 numpy
 bokeh
-snakemake
-jupyter
 pyfaidx
-sh
-BioPython
-htslib
