@@ -1,11 +1,6 @@
 # Custom changes to axes that pertain to genome not data
 # eg in this case move left chromosome arm axes to RHS
 from genomeplot.genomeplot import GenomePlot
-from urllib.request import urlretrieve
-import os
-import sh
-import pyfaidx
-from genomeplot.prerolled import util
 import pkg_resources
 import pandas as pd
 

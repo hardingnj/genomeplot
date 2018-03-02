@@ -2,11 +2,6 @@
 # eg in this case move left chromosome arm axes to RHS
 from genomeplot.genomeplot import GenomePlot
 from bokeh.models import LinearAxis
-from urllib.request import urlretrieve
-import os
-import tempfile
-import sh
-from genomeplot.prerolled import util
 import pkg_resources
 
 
