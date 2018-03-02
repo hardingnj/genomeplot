@@ -42,6 +42,7 @@ release = '0.1'
 extensions = [
     'bokeh.sphinxext.bokeh_plot'
 ]
+bokeh_plot_pyfile_include_dirs = ['../scripts']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
