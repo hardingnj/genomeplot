@@ -3,8 +3,9 @@ build:
 
 python:
     version: 3.5
+    setup_py_install: true
 
 formats:
     - none
 
-requirements_file: requirements/docs.txt
+requirements_file: requirements/requirements.txt
