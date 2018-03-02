@@ -10,7 +10,10 @@ Welcome to Genomeplot's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+`genomeplot` is a simple convenience wrapper to `bokeh`, that allows the creation of interactive plots across the genome.
+The package contains a few "prerolled" genome plots, that create the base figure using the `GenomePlot()` class.
 
+.. bokeh-plot:: ../scripts/anophelesgambiae.py
 
 Indices and tables
 ==================
