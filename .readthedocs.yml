@@ -6,3 +6,5 @@ python:
 
 formats:
     - none
+
+requirements_file: requirements/docs.txt
