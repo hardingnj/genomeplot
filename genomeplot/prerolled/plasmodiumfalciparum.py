@@ -6,21 +6,20 @@ import os
 import sh
 import pyfaidx
 from genomeplot.prerolled import util
+import pkg_resources
+import pandas as pd
 
 
 def load():
 
-    fasta_url = "http://plasmodb.org/common/downloads/release-35/Pfalciparum3D7/fasta/data/PlasmoDB-35_Pfalciparum3D7_Genome.fasta"
-    path = os.path.join("/tmp", "PlasmoDB-35_Pfalciparum3D7_Genome.fasta.gz")
-    fasta_fn, ext = os.path.splitext(path)
+    resource_package = __name__
+    resource_path = '/'.join(('data', 'plasmodiumfalciparum.txt'))
 
-    if not os.path.isfile(path):
-        print("Downloading from", fasta_url, "to", fasta_fn)
-        urlretrieve(fasta_url, fasta_fn, util.reporthook)
-        sh.bgzip(fasta_fn)
+    path = pkg_resources.resource_filename(resource_package, resource_path)
+    df = pd.read_csv(path, index_col=0)
 
-    fa = pyfaidx.Fasta(path)
-    plas_contigs = sorted(fa.keys())[:14]
+    # drop the mt chrom
+    plas_contigs = df.query("length > 10000").index.tolist()
 
     gf = GenomePlot(path, contigs=plas_contigs, layout="ooooo|oooo|ooo|oo")
 

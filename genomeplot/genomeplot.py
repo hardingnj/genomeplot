@@ -4,6 +4,29 @@ from bokeh.models import NumeralTickFormatter, Range1d, LinearAxis, ColumnDataSo
 
 import pyfaidx
 import numpy as np
+import pandas as pd
+from collections import OrderedDict
+
+
+class Seq:
+
+    def __init__(self, name, n):
+        self.name = name
+        self.length = n
+
+    def __len__(self):
+        return self.length
+
+
+class Reference:
+    qq = OrderedDict()
+
+    def __init__(self, od):
+        for k, v in od.length.iteritems():
+            self.qq[k] = Seq(k, v)
+
+    def __getitem__(self, arg):
+        return self.qq[arg]
 
 
 class GenomePlot:
@@ -17,11 +40,17 @@ class GenomePlot:
     min_border_right = 10
     major_tick_dist = 1e7
     plot_width_per_mb = 6
-    chrom_label_func = lambda self, y: y
 
-    def __init__(self, fasta, contigs=None, layout=None, share_y=True, pfunc=None):
+    @staticmethod
+    def chrom_label_func(y):
+        return y
 
-        self.genome = pyfaidx.Fasta(fasta)
+    def __init__(self, reference, contigs=None, layout=None, pfunc=None):
+
+        try:
+            self.genome = pyfaidx.Fasta(reference)
+        except pyfaidx.FastaIndexingError:
+            self.genome = Reference(pd.read_csv(reference, index_col=0))
 
         if contigs is None:
             self.contigs = list(self.genome.keys())
@@ -66,7 +95,7 @@ class GenomePlot:
     def apply(self, func, **kwargs):
 
         # create a figure with specified layout
-        d = [[] for i in range(len(self.layout))]
+        d = [[] for _ in range(len(self.layout))]
 
         for i, row in enumerate(self.layout):
 
@@ -78,8 +107,8 @@ class GenomePlot:
 
                 if seqid is not None:
 
-                    csize = len(self.genome[seqid])
-                    px = int(csize * 1e-6 * self.plot_width_per_mb)
+                    contig_size = len(self.genome[seqid])
+                    px = int(contig_size * 1e-6 * self.plot_width_per_mb)
                     px += self.min_border_left
                     px += self.min_border_right
 
@@ -95,10 +124,10 @@ class GenomePlot:
                                 tools=self.tools,
                                 title=self.chrom_label_func(seqid),
                                 y_range=yrange,
-                                x_range=(1, csize))
+                                x_range=(1, contig_size))
 
                     s1.xaxis.ticker = FixedTicker(
-                        ticks=np.arange(0, csize, self.major_tick_dist))
+                        ticks=np.arange(0, contig_size, self.major_tick_dist))
                     s1.xaxis[0].formatter = NumeralTickFormatter(format="0a.0")
 
                     # handle general plot things specific to genome not data
@@ -112,7 +141,7 @@ class GenomePlot:
                 else:
                     d[i].append(None)
 
-        # put the subplots in a gridplot
+        # put the subplots in a grid plot
         p = gridplot(d, toolbar_location="left", sizing_mode='fixed', plot_width=None)
 
         show(p)

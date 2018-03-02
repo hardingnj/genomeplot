@@ -7,28 +7,25 @@ import os
 import tempfile
 import sh
 from genomeplot.prerolled import util
+import pkg_resources
 
 
 def load():
 
-    def anopheles_plot(chrom, subplot):
-        if chrom.endswith("L"):
+    def anopheles_plot(contig, subplot):
+        if contig.endswith("L"):
             subplot.yaxis.visible = False
             subplot.add_layout(LinearAxis(), 'right')
 
-    fasta_url = "https://www.vectorbase.org/download/anopheles-gambiae-pestchromosomesagamp4fagz"
-    path = os.path.join("/tmp", "Anopheles-gambiae-PEST_CHROMOSOMES_AgamP4.fa.gz")
+    resource_package = __name__
+    resource_path = '/'.join(('data', 'anophelesgambiae.txt'))
 
-    if not os.path.isfile(path):
-        print("Downloading from", fasta_url, "to", path)
-        urlretrieve(fasta_url, path, util.reporthook)
-        fasta_fn, ext = os.path.splitext(path)
-        sh.gunzip(path)
-        sh.bgzip(fasta_fn)
+    path = pkg_resources.resource_filename(resource_package, resource_path)
+    print(path)
 
-    gf = GenomePlot(fasta=path,                              # filepath to fasta
-                    contigs=("2R", "2L", "3R", "3L", "X"),   # contigs to display in order
-                    layout="oo|ooo",                         # layout string
-                    pfunc=anopheles_plot)                    # custom layout function
+    gf = GenomePlot(reference=path,
+                    contigs=("2R", "2L", "3R", "3L", "X"),  # contigs to display in order
+                    layout="oo|ooo",                        # layout string
+                    pfunc=anopheles_plot)                   # custom layout function
 
     return gf

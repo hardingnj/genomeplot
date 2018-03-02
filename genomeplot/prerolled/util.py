@@ -3,20 +3,6 @@ from bokeh.models import ColumnDataSource, HoverTool
 import numpy as np
 import pandas as pd
 
-def reporthook(blocknum, blocksize, totalsize):
-
-    readsofar = blocknum * blocksize
-
-    if totalsize > 0:
-        percent = readsofar * 1e2 / totalsize
-        s = "\r%5.1f%% %*d / %d kb" % (
-            percent, len(str(totalsize)), readsofar / 1024, totalsize / 1024)
-        sys.stderr.write(s)
-        if readsofar >= totalsize: # near the end
-            sys.stderr.write("\n")
-    else: # total size is unknown
-        sys.stderr.write("read %d\n" % (readsofar,))
-
 
 def noiseplot(contig, subplot, is_left=None, is_bottom=None, winsize=100000):
 

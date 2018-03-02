@@ -1,2 +1,4 @@
 .idea/*
 build/*
+genomeplot/build/*
+notebooks/.ipynb-checkpoints
