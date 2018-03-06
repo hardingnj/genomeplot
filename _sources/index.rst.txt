@@ -22,7 +22,7 @@ Creating a custom `genomeplot`
 First, create a new instance of the `GenomePlot` class, check out the documentation.
 Once created, to make a plot, a custom function is passed to the `.apply()` method of `GenomePlot`.
 This function is then applied in turn to each contig, each making a plot which is placed in the grid.
-A convenience dummy function noiseplot_ is available to test GenomePlot instances.
+A convenience dummy function `noiseplot` is available to test GenomePlot instances.
 
 Using a prerolled `genomeplot`
 ==============================
