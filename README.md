@@ -1,2 +1,6 @@
 # genomeplot
-A plotting function to allow genome wide visualisations based on the bokeh library
+
+A simple wrapper to `bokeh`, streamlining genome wide visualisations.
+
+Documentation: https://hardingnj.github.io/genomeplot/
+
