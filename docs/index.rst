@@ -3,15 +3,27 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Genomeplot's documentation!
+Welcome to Genomeplot!
 ======================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-`genomeplot` is a simple convenience wrapper to `bokeh`, that allows the creation of interactive plots across the genome.
-The package contains a few "prerolled" genome plots, that create the base figure using the `GenomePlot()` class.
+`genomeplot` is a simple convenience wrapper to `bokeh`, allowing the creation of interactive plots across the genome.
+
+It is simple to create a plot for any genome, simply with a `.fasta` file.
+
+Alternatively, this package contains a few "prerolled" genome plots, that create the base figure using the `GenomePlot()` class.
+
+Creating a custom `genomeplot`
+==============================
+
+Some text here.
+
+
+Using a prerolled `genomeplot`
+==============================
 
 .. bokeh-plot:: ../scripts/anophelesgambiae.py
 
@@ -35,7 +47,28 @@ Or with the other prerolled GenomePlot:
 
 Palette
 
-.. bokeh-palette-group:: mpl
+.. :bokeh-palette:`viridis(256)`
+
+Some more text.
+
+
+Contributing
+============
+
+Pull Requests for :wq
+
+
+
+License and warning
+===================
+
+This is academic software, has not been extensively tested, and may contain bugs and/or omissions.
+If you find errors or have problems, please raise an issue.
+
+
+
+
+
 
 Indices and tables
 ==================

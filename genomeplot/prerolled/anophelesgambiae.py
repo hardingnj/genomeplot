@@ -16,7 +16,6 @@ def load():
     resource_path = '/'.join(('data', 'anophelesgambiae.txt'))
 
     path = pkg_resources.resource_filename(resource_package, resource_path)
-    print(path)
 
     gf = GenomePlot(reference=path,
                     contigs=("2R", "2L", "3R", "3L", "X"),  # contigs to display in order
