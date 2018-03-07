@@ -3,73 +3,94 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+======================
 Welcome to Genomeplot!
 ======================
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :hidden:
 
-`genomeplot` is a simple convenience wrapper to some `bokeh` functions, streamlining the creation of interactive plots across the genome.
+   gp
+   gallery
+   contributing
+   util/util
 
-It is simple to create a plot for any genome, simply with a genome reference file (FASTA format).
+``genomeplot`` is a simple convenience wrapper to some bokeh_ functions, streamlining the creation of interactive plots across the genome.
 
-Alternatively, this package contains a few "prerolled" genome plots, that create the base figure using the `GenomePlot()` class.
+It is simple to create a plot for any genome, all you need is a genome reference file (FASTA_ format).
 
-Creating a custom `genomeplot`
-==============================
-
-First, create a new instance of the `GenomePlot` class, check out the documentation.
-Once created, to make a plot, a custom function is passed to the `.apply()` method of `GenomePlot`.
-This function is then applied in turn to each contig, each making a plot which is placed in the grid.
-A convenience dummy function `noiseplot` is available to test GenomePlot instances.
+Alternatively, this package contains a few "prerolled" genome plots, that create the base figure using the :class:`genomeplot.GenomePlot` class.
 
 Using a prerolled `genomeplot`
-==============================
+------------------------------
 
-Instances of `GenomePlot` that are usable for representing genome data of two organisms are currently available.
-If you would like to contribute a prerolled GenomePlot, please see contributing_.
+Instances of ``GenomePlot`` representing the genome of two organisms are currently available: `Anopheles gambiae` and `Plasmodium falciparum`.
+If you would like to contribute a prerolled ``GenomePlot``, please see :ref:`contributing`.
 
 .. bokeh-plot:: ../scripts/anophelesgambiae.py
-    :source-position: below
-
-Or with the other prerolled GenomePlot:
-
-.. bokeh-plot::
     :source-position: above
 
-    from bokeh.plotting import figure, output_file, show
+The :class:`genomeplot.GenomePlot` instance is created using the ``.load()`` method. Parameters may still be edited by directly setting the values in the class.
 
-    output_file("example.html")
+.. bokeh-plot:: ../scripts/plasmodiumfalciparum.py
+    :source-position: above
 
-    x = [1, 2, 3, 4, 5]
-    y = [6, 7, 6, 4, 5]
+Creating a custom `genomeplot`
+------------------------------
 
-    p = figure(title="example", plot_width=300, plot_height=300)
-    p.line(x, y, line_width=2)
-    p.circle(x, y, size=10, fill_color="white")
+First, create a new instance of the :class:`genomeplot.GenomePlot` class. The only required argument is a filepath describing the contigs present in the reference genome.
+This is typically a FASTA_, or alternatively a ``csv`` file, meeting the requirements described here. 
 
-    show(p)
+Below is a simple example for a generic ``GenomePlot``::
 
-Some more text.
+    import genomeplot
+    
+    fasta_path = "/path/to/fastafile.fa.gz"
+    contigs = ["1", "2", "3", "4", "5", "6", "7", "8", "X"]
+    gf = GenomePlot(fasta_path, contigs=contigs, layout="oo|ooo|oooo")
 
+Once instantiated, to make a plot, a plot function is passed to the ``.apply()`` method of :class:`genomeplot.GenomePlot`.
+This function is then applied in turn to each contig, each making a plot which is placed in the grid.
+A convenience dummy function :func:`genomeplot.prerolled.util.noiseplot` is available to test ``GenomePlot`` instances::
+    
+	gf.apply(genomeplot.util.noiseplot)
+    
+This function simply places a circle with a random ``y`` value at intervals over the genome.
+Initially it is recommended that noiseplot is used as a template.
+More detailed instructions to creating plotting functions suitable for use with ``GenomePlot.apply()`` will be available soon.
+More complex examples of use will also be made available in the :ref:`gallery`.
+
+Source
+------
+
+Source code is hosted on GitHub at https://github.com/hardingnj/genomeplot.
 
 Contributing
-============
+------------
 
-Pull Requests for additional organisms and new features are very welcome. See contributing_ for more details.
+Pull requests for additional organisms and new features are very welcome. See :ref:`contributing` for more details.
 
 License and warning
-===================
+-------------------
 
 This is academic software, has not been extensively tested, and may contain bugs and/or omissions.
-If you find errors or have problems, please raise an issue at https://github.com/hardingnj/genomeplot.
-This software (including documentation) is Licensed under the GNU GENERAL PUBLIC LICENSE.
+If you find errors or have problems, please raise an issue at https://github.com/hardingnj/genomeplot/issues.
+This software (including documentation) is licensed under the GNU GENERAL PUBLIC LICENSE.
 
+Acknowledgements
+----------------
+
+This code is heavily based on some matplotlib_ code written by `Alistair Miles <https://github.com/alimanfoo>`_
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+.. _bokeh: https://bokeh.pydata.org/en/latest/
+.. _FASTA: http://genetics.bwh.harvard.edu/pph/FASTA.html
+.. _GenomePlot: :class:`genomeplot.GenomePlot`
+.. _matplotlib: https://matplotlib.org

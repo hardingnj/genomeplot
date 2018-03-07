@@ -1,0 +1,6 @@
+GenomePlot
+----------
+
+.. autoclass:: genomeplot.GenomePlot
+
+

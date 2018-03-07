@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>genomeplot.genomeplot &#8212; Genomeplot 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for genomeplot.genomeplot</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="k">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">gridplot</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.tickers</span> <span class="k">import</span> <span class="n">FixedTicker</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">NumeralTickFormatter</span><span class="p">,</span> <span class="n">Range1d</span><span class="p">,</span> <span class="n">LinearAxis</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">,</span> <span class="n">HoverTool</span>
+
+<span class="kn">import</span> <span class="nn">pyfaidx</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+
+
+<span class="k">class</span> <span class="nc">Seq</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">n</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span>
+
+
+<span class="k">class</span> <span class="nc">Reference</span><span class="p">:</span>
+    <span class="n">qq</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">od</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">od</span><span class="o">.</span><span class="n">length</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">qq</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">qq</span><span class="p">[</span><span class="n">arg</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="GenomePlot"><a class="viewcode-back" href="../../gp.html#genomeplot.GenomePlot">[docs]</a><span class="k">class</span> <span class="nc">GenomePlot</span><span class="p">:</span>
+
+    <span class="n">genome</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">contigs</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">tools</span> <span class="o">=</span> <span class="s2">&quot;pan,wheel_zoom,box_zoom,save,reset&quot;</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pfunc</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">min_border_left</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">min_border_right</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">major_tick_dist</span> <span class="o">=</span> <span class="mf">1e7</span>
+    <span class="n">plot_width_per_mb</span> <span class="o">=</span> <span class="mi">6</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">chrom_label_func</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">y</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">contigs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pfunc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">genome</span> <span class="o">=</span> <span class="n">pyfaidx</span><span class="o">.</span><span class="n">Fasta</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">pyfaidx</span><span class="o">.</span><span class="n">FastaIndexingError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">genome</span> <span class="o">=</span> <span class="n">Reference</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">contigs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contigs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">contigs</span> <span class="o">=</span> <span class="n">contigs</span>
+
+        <span class="c1"># handle layout</span>
+        <span class="k">if</span> <span class="n">layout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_layout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_layout</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">pfunc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pfunc</span> <span class="o">=</span> <span class="n">pfunc</span>
+
+    <span class="k">def</span> <span class="nf">parse_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lstring</span><span class="p">):</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">lstring</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;layout must be a string&quot;</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contigs</span><span class="p">)</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">lstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">x</span> <span class="ow">in</span> <span class="s2">&quot;ox.&quot;</span><span class="p">,</span> <span class="s2">&quot;Only chars o, x, . are allowed&quot;</span>
+                <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="s2">&quot;.&quot;</span><span class="p">:</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">pop</span><span class="p">())</span>
+            <span class="n">layout</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">layout</span>
+
+    <span class="k">def</span> <span class="nf">auto_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># TO DO: Yet to complete.</span>
+        <span class="k">for</span> <span class="nb">len</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contigs</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c1"># create a figure with specified layout</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">))]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">):</span>
+
+            <span class="n">is_bottom</span> <span class="o">=</span> <span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layout</span><span class="p">))</span>
+
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">seqid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+
+                <span class="n">is_left</span> <span class="o">=</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">seqid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+                    <span class="n">contig_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">seqid</span><span class="p">])</span>
+                    <span class="n">px</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">contig_size</span> <span class="o">*</span> <span class="mf">1e-6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_width_per_mb</span><span class="p">)</span>
+                    <span class="n">px</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_border_left</span>
+                    <span class="n">px</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_border_right</span>
+
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">yrange</span> <span class="o">=</span> <span class="n">s1</span><span class="o">.</span><span class="n">y_range</span>
+                    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+                        <span class="n">yrange</span> <span class="o">=</span> <span class="kc">None</span>
+
+                    <span class="n">s1</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="n">px</span><span class="p">,</span>
+                                <span class="n">min_border_left</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_border_left</span><span class="p">,</span>
+                                <span class="n">min_border_right</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">min_border_right</span><span class="p">,</span>
+                                <span class="n">plot_height</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
+                                <span class="n">tools</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="p">,</span>
+                                <span class="n">title</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">chrom_label_func</span><span class="p">(</span><span class="n">seqid</span><span class="p">),</span>
+                                <span class="n">y_range</span><span class="o">=</span><span class="n">yrange</span><span class="p">,</span>
+                                <span class="n">x_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">contig_size</span><span class="p">))</span>
+
+                    <span class="n">s1</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">ticker</span> <span class="o">=</span> <span class="n">FixedTicker</span><span class="p">(</span>
+                        <span class="n">ticks</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">contig_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">major_tick_dist</span><span class="p">))</span>
+                    <span class="n">s1</span><span class="o">.</span><span class="n">xaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">formatter</span> <span class="o">=</span> <span class="n">NumeralTickFormatter</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;0a.0&quot;</span><span class="p">)</span>
+
+                    <span class="c1"># handle general plot things specific to genome not data</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pfunc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">pfunc</span><span class="p">(</span><span class="n">seqid</span><span class="p">,</span> <span class="n">s1</span><span class="p">)</span>
+
+                    <span class="c1"># function lives here</span>
+                    <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">genome</span><span class="p">[</span><span class="n">seqid</span><span class="p">],</span> <span class="n">s1</span><span class="p">,</span> <span class="n">is_left</span><span class="o">=</span><span class="n">is_left</span><span class="p">,</span> <span class="n">is_bottom</span><span class="o">=</span><span class="n">is_bottom</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># put the subplots in a grid plot</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">gridplot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">toolbar_location</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span> <span class="n">sizing_mode</span><span class="o">=</span><span class="s1">&#39;fixed&#39;</span><span class="p">,</span> <span class="n">plot_width</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Nicholas Harding.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

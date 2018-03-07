@@ -26,6 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="GenomePlot" href="gp.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -45,28 +46,14 @@
 <h1>Welcome to Genomeplot!<a class="headerlink" href="#welcome-to-genomeplot" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<p><cite>genomeplot</cite> is a simple convenience wrapper to some <cite>bokeh</cite> functions, streamlining the creation of interactive plots across the genome.</p>
-<p>It is simple to create a plot for any genome, simply with a genome reference file (FASTA format).</p>
-<p>Alternatively, this package contains a few &#8220;prerolled&#8221; genome plots, that create the base figure using the <cite>GenomePlot()</cite> class.</p>
-</div>
-<div class="section" id="creating-a-custom-genomeplot">
-<h1>Creating a custom <cite>genomeplot</cite><a class="headerlink" href="#creating-a-custom-genomeplot" title="Permalink to this headline">¶</a></h1>
-<p>First, create a new instance of the <cite>GenomePlot</cite> class, check out the documentation.
-Once created, to make a plot, a custom function is passed to the <cite>.apply()</cite> method of <cite>GenomePlot</cite>.
-This function is then applied in turn to each contig, each making a plot which is placed in the grid.
-A convenience dummy function <cite>noiseplot</cite> is available to test GenomePlot instances.</p>
-</div>
+<p><code class="docutils literal"><span class="pre">genomeplot</span></code> is a simple convenience wrapper to some <a class="reference external" href="https://bokeh.pydata.org/en/latest/">bokeh</a> functions, streamlining the creation of interactive plots across the genome.</p>
+<p>It is simple to create a plot for any genome, all you need is a genome reference file (<a class="reference external" href="http://genetics.bwh.harvard.edu/pph/FASTA.html">FASTA</a> format).</p>
+<p>Alternatively, this package contains a few &#8220;prerolled&#8221; genome plots, that create the base figure using the <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal"><span class="pre">genomeplot.GenomePlot</span></code></a> class.</p>
 <div class="section" id="using-a-prerolled-genomeplot">
-<h1>Using a prerolled <cite>genomeplot</cite><a class="headerlink" href="#using-a-prerolled-genomeplot" title="Permalink to this headline">¶</a></h1>
-<p>Instances of <cite>GenomePlot</cite> that are usable for representing genome data of two organisms are currently available.
-If you would like to contribute a prerolled GenomePlot, please see <a class="reference internal" href="#contributing">contributing</a>.</p>
-
-<script
-    src="scripts/bokeh-plot-index-external-c6e59e8e7717456c9514ad552f10a890.js"
-    id="2a772470-21b1-4735-b656-0a7a58f80d77"
-    data-bokeh-model-id="38ea88e6-8350-4725-bb7f-4a43e98f2f31"
-    data-bokeh-doc-id="f3627ce8-34ae-4e87-90a7-051d36ea7e79"
-></script><div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+<h2>Using a prerolled <cite>genomeplot</cite><a class="headerlink" href="#using-a-prerolled-genomeplot" title="Permalink to this headline">¶</a></h2>
+<p>Instances of <code class="docutils literal"><span class="pre">GenomePlot</span></code> representing the genome of two organisms are currently available: <cite>Anopheles gambiae</cite> and <cite>Plasmodium falciparum</cite>.
+If you would like to contribute a prerolled <code class="docutils literal"><span class="pre">GenomePlot</span></code>, please see <a class="reference internal" href="contributing.html#contributing"><span class="std std-ref">Contributing</span></a>.</p>
+<div class="highlight-python" id="index.bokeh-plot-index-external-e034de8f2f894e6ba70bf285e458b9d3.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example.html&quot;</span><span class="p">)</span>
@@ -78,46 +65,81 @@ If you would like to contribute a prerolled GenomePlot, please see <a class="ref
 <span class="n">gf</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">genomeplot</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">noiseplot</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Or with the other prerolled GenomePlot:</p>
-<div class="highlight-python" id="index.bokeh-plot-index-inline-34b9b09b05134eabab00ccb5ca60912a.js"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">show</span>
+
+<script
+    src="scripts/bokeh-plot-index-external-e034de8f2f894e6ba70bf285e458b9d3.js"
+    id="0ade0d88-a27b-49b7-b317-09bf2871a75e"
+    data-bokeh-model-id="115b10b8-08ce-4e5d-9838-f95bc289b5db"
+    data-bokeh-doc-id="2707ef79-49e3-4a5d-bd9c-8d51c8797fd4"
+></script><p>The <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal"><span class="pre">genomeplot.GenomePlot</span></code></a> instance is created using the <code class="docutils literal"><span class="pre">.load()</span></code> method. Parameters may still be edited by directly setting the values in the class.</p>
+<div class="highlight-python" id="index.bokeh-plot-index-external-aae42687fbf947109f3fed4309f86027.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example.html&quot;</span><span class="p">)</span>
 
-<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="c1"># First create a GenomePlot instance</span>
+<span class="n">gf</span> <span class="o">=</span> <span class="n">genomeplot</span><span class="o">.</span><span class="n">plasmodiumfalciparum</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
 
-<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;example&quot;</span><span class="p">,</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">p</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
-
-<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="c1"># Pass in a function to the apply method to make a plot</span>
+<span class="n">gf</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">genomeplot</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">noiseplot</span><span class="p">,</span> <span class="n">winsize</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
 </pre></div>
 </div>
 
 <script
-    src="scripts/bokeh-plot-index-inline-34b9b09b05134eabab00ccb5ca60912a.js"
-    id="ff17c09a-adf9-4041-acdf-344736768c45"
-    data-bokeh-model-id="98b9acee-9172-4997-9d02-d9a635f734eb"
-    data-bokeh-doc-id="6c49dd27-6053-4053-bbf5-e8bea72b3b53"
-></script><p>Some more text.</p>
+    src="scripts/bokeh-plot-index-external-aae42687fbf947109f3fed4309f86027.js"
+    id="d7495a34-1657-4246-a171-b6e9f8f69d87"
+    data-bokeh-model-id="6a087d1e-e1b9-48e1-9127-5150ec12eb3d"
+    data-bokeh-doc-id="bb8bc0fa-4324-46e7-b7c5-2cfd83cdd35d"
+></script></div>
+<div class="section" id="creating-a-custom-genomeplot">
+<h2>Creating a custom <cite>genomeplot</cite><a class="headerlink" href="#creating-a-custom-genomeplot" title="Permalink to this headline">¶</a></h2>
+<p>First, create a new instance of the <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal"><span class="pre">genomeplot.GenomePlot</span></code></a> class. The only required argument is a filepath describing the contigs present in the reference genome.
+This is typically a <a class="reference external" href="http://genetics.bwh.harvard.edu/pph/FASTA.html">FASTA</a>, or alternatively a <code class="docutils literal"><span class="pre">csv</span></code> file, meeting the requirements described here.</p>
+<p>Below is a simple example for a generic <code class="docutils literal"><span class="pre">GenomePlot</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+
+<span class="n">fasta_path</span> <span class="o">=</span> <span class="s2">&quot;/path/to/fastafile.fa.gz&quot;</span>
+<span class="n">contigs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="s2">&quot;X&quot;</span><span class="p">]</span>
+<span class="n">gf</span> <span class="o">=</span> <span class="n">GenomePlot</span><span class="p">(</span><span class="n">fasta_path</span><span class="p">,</span> <span class="n">contigs</span><span class="o">=</span><span class="n">contigs</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;oo|ooo|oooo&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once instantiated, to make a plot, a plot function is passed to the <code class="docutils literal"><span class="pre">.apply()</span></code> method of <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal"><span class="pre">genomeplot.GenomePlot</span></code></a>.
+This function is then applied in turn to each contig, each making a plot which is placed in the grid.
+A convenience dummy function <a class="reference internal" href="util/util.html#genomeplot.prerolled.util.noiseplot" title="genomeplot.prerolled.util.noiseplot"><code class="xref py py-func docutils literal"><span class="pre">genomeplot.prerolled.util.noiseplot()</span></code></a> is available to test <code class="docutils literal"><span class="pre">GenomePlot</span></code> instances:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">gf</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">genomeplot</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">noiseplot</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This function simply places a circle with a random <code class="docutils literal"><span class="pre">y</span></code> value at intervals over the genome.
+Initially it is recommended that noiseplot is used as a template.
+More detailed instructions to creating plotting functions suitable for use with <code class="docutils literal"><span class="pre">GenomePlot.apply()</span></code> will be available soon.
+More complex examples of use will also be made available in the <a class="reference internal" href="gallery.html#gallery"><span class="std std-ref">Gallery</span></a>.</p>
+</div>
+<div class="section" id="source">
+<h2>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h2>
+<p>Source code is hosted on GitHub at <a class="reference external" href="https://github.com/hardingnj/genomeplot">https://github.com/hardingnj/genomeplot</a>.</p>
 </div>
 <div class="section" id="contributing">
-<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
-<p>Pull Requests for additional organisms and new features are very welcome. See <a class="reference internal" href="#contributing">contributing</a> for more details.</p>
+<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<p>Pull requests for additional organisms and new features are very welcome. See <a class="reference internal" href="contributing.html#contributing"><span class="std std-ref">Contributing</span></a> for more details.</p>
 </div>
 <div class="section" id="license-and-warning">
-<h1>License and warning<a class="headerlink" href="#license-and-warning" title="Permalink to this headline">¶</a></h1>
+<h2>License and warning<a class="headerlink" href="#license-and-warning" title="Permalink to this headline">¶</a></h2>
 <p>This is academic software, has not been extensively tested, and may contain bugs and/or omissions.
-If you find errors or have problems, please raise an issue at <a class="reference external" href="https://github.com/hardingnj/genomeplot">https://github.com/hardingnj/genomeplot</a>.
-This software (including documentation) is Licensed under the GNU GENERAL PUBLIC LICENSE.</p>
+If you find errors or have problems, please raise an issue at <a class="reference external" href="https://github.com/hardingnj/genomeplot/issues">https://github.com/hardingnj/genomeplot/issues</a>.
+This software (including documentation) is licensed under the GNU GENERAL PUBLIC LICENSE.</p>
+</div>
+<div class="section" id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
+<p>This code is heavily based on some <a class="reference external" href="https://matplotlib.org">matplotlib</a> code written by <a class="reference external" href="https://github.com/alimanfoo">Alistair Miles</a></p>
 </div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
 <li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
+</div>
 </div>
 
 
@@ -128,17 +150,22 @@ This software (including documentation) is Licensed under the GNU GENERAL PUBLIC
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to Genomeplot!</a></li>
-<li><a class="reference internal" href="#creating-a-custom-genomeplot">Creating a custom <cite>genomeplot</cite></a></li>
+<li><a class="reference internal" href="#">Welcome to Genomeplot!</a><ul>
 <li><a class="reference internal" href="#using-a-prerolled-genomeplot">Using a prerolled <cite>genomeplot</cite></a></li>
+<li><a class="reference internal" href="#creating-a-custom-genomeplot">Creating a custom <cite>genomeplot</cite></a></li>
+<li><a class="reference internal" href="#source">Source</a></li>
 <li><a class="reference internal" href="#contributing">Contributing</a></li>
 <li><a class="reference internal" href="#license-and-warning">License and warning</a></li>
+<li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
 </ul>
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="gp.html" title="next chapter">GenomePlot</a></li>
   </ul></li>
 </ul>
 </div>
