@@ -40,8 +40,10 @@ release = '0.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'bokeh.sphinxext.bokeh_plot'
-]
+    'bokeh.sphinxext.bokeh_plot',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.autodoc']
+
 bokeh_plot_pyfile_include_dirs = ['../scripts']
 
 # Add any paths that contain templates here, relative to this directory.
