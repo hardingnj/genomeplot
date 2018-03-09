@@ -66,6 +66,22 @@ Source
 
 Source code is hosted on GitHub at https://github.com/hardingnj/genomeplot.
 
+Installation
+------------
+
+This package isn't yet stable/mature enough to be put in ``conda``/``pypi``, so for the moment please install by either cloning the repo, or downloading the ``.tar.gz`` from the master branch and extracting. 
+
+Then run::
+
+    python setup.py install
+
+Requirements
+------------
+
+::
+    bokeh >= 0.12.14
+    python >= 3.5
+
 Contributing
 ------------
 
@@ -81,7 +97,7 @@ This software (including documentation) is licensed under the GNU GENERAL PUBLIC
 Acknowledgements
 ----------------
 
-This code is heavily based on some matplotlib_ code written by `Alistair Miles <https://github.com/alimanfoo>`_
+Much of this code is heavily based on matplotlib_ code written by `Alistair Miles <https://github.com/alimanfoo>`_
 
 Indices and tables
 ------------------
