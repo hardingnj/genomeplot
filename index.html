@@ -53,7 +53,7 @@
 <h2>Using a prerolled <cite>genomeplot</cite><a class="headerlink" href="#using-a-prerolled-genomeplot" title="Permalink to this headline">¶</a></h2>
 <p>Instances of <code class="docutils literal"><span class="pre">GenomePlot</span></code> representing the genome of two organisms are currently available: <cite>Anopheles gambiae</cite> and <cite>Plasmodium falciparum</cite>.
 If you would like to contribute a prerolled <code class="docutils literal"><span class="pre">GenomePlot</span></code>, please see <a class="reference internal" href="contributing.html#contributing"><span class="std std-ref">Contributing</span></a>.</p>
-<div class="highlight-python" id="index.bokeh-plot-index-external-e034de8f2f894e6ba70bf285e458b9d3.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+<div class="highlight-python" id="index.bokeh-plot-index-external-c94c56b83e25450f96f465279a59c69a.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example.html&quot;</span><span class="p">)</span>
@@ -67,12 +67,12 @@ If you would like to contribute a prerolled <code class="docutils literal"><span
 </div>
 
 <script
-    src="scripts/bokeh-plot-index-external-e034de8f2f894e6ba70bf285e458b9d3.js"
-    id="0ade0d88-a27b-49b7-b317-09bf2871a75e"
-    data-bokeh-model-id="115b10b8-08ce-4e5d-9838-f95bc289b5db"
-    data-bokeh-doc-id="2707ef79-49e3-4a5d-bd9c-8d51c8797fd4"
+    src="scripts/bokeh-plot-index-external-c94c56b83e25450f96f465279a59c69a.js"
+    id="0c34bf7f-8e4e-4c4a-9999-736c9d4fc7b8"
+    data-bokeh-model-id="fa3e3ec5-3c97-44ed-a425-758ccdffc1f9"
+    data-bokeh-doc-id="d027505d-2da1-48f9-9c90-7993abbd3f6f"
 ></script><p>The <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal"><span class="pre">genomeplot.GenomePlot</span></code></a> instance is created using the <code class="docutils literal"><span class="pre">.load()</span></code> method. Parameters may still be edited by directly setting the values in the class.</p>
-<div class="highlight-python" id="index.bokeh-plot-index-external-aae42687fbf947109f3fed4309f86027.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+<div class="highlight-python" id="index.bokeh-plot-index-external-05b58702ffc143378189ab022adf9455.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example.html&quot;</span><span class="p">)</span>
@@ -86,10 +86,10 @@ If you would like to contribute a prerolled <code class="docutils literal"><span
 </div>
 
 <script
-    src="scripts/bokeh-plot-index-external-aae42687fbf947109f3fed4309f86027.js"
-    id="d7495a34-1657-4246-a171-b6e9f8f69d87"
-    data-bokeh-model-id="6a087d1e-e1b9-48e1-9127-5150ec12eb3d"
-    data-bokeh-doc-id="bb8bc0fa-4324-46e7-b7c5-2cfd83cdd35d"
+    src="scripts/bokeh-plot-index-external-05b58702ffc143378189ab022adf9455.js"
+    id="c12dc709-a2a1-4db3-9b42-87d3939c2107"
+    data-bokeh-model-id="8c3c89b8-1147-468f-a048-c4b320bf5d8f"
+    data-bokeh-doc-id="f06fa426-d76b-45ab-89ef-29e6d6d8a502"
 ></script></div>
 <div class="section" id="creating-a-custom-genomeplot">
 <h2>Creating a custom <cite>genomeplot</cite><a class="headerlink" href="#creating-a-custom-genomeplot" title="Permalink to this headline">¶</a></h2>
@@ -118,6 +118,22 @@ More complex examples of use will also be made available in the <a class="refere
 <h2>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h2>
 <p>Source code is hosted on GitHub at <a class="reference external" href="https://github.com/hardingnj/genomeplot">https://github.com/hardingnj/genomeplot</a>.</p>
 </div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>This package isn&#8217;t yet stable/mature enough to be put in <code class="docutils literal"><span class="pre">conda</span></code>/<code class="docutils literal"><span class="pre">pypi</span></code>, so for the moment please install by either cloning the repo, or downloading the <code class="docutils literal"><span class="pre">.tar.gz</span></code> from the master branch and extracting.</p>
+<p>Then run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>::</dt>
+<dd>bokeh &gt;= 0.12.14
+python &gt;= 3.5</dd>
+</dl>
+</div>
 <div class="section" id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
 <p>Pull requests for additional organisms and new features are very welcome. See <a class="reference internal" href="contributing.html#contributing"><span class="std std-ref">Contributing</span></a> for more details.</p>
@@ -130,7 +146,7 @@ This software (including documentation) is licensed under the GNU GENERAL PUBLIC
 </div>
 <div class="section" id="acknowledgements">
 <h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Permalink to this headline">¶</a></h2>
-<p>This code is heavily based on some <a class="reference external" href="https://matplotlib.org">matplotlib</a> code written by <a class="reference external" href="https://github.com/alimanfoo">Alistair Miles</a></p>
+<p>Much of this code is heavily based on <a class="reference external" href="https://matplotlib.org">matplotlib</a> code written by <a class="reference external" href="https://github.com/alimanfoo">Alistair Miles</a></p>
 </div>
 <div class="section" id="indices-and-tables">
 <h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
@@ -154,6 +170,8 @@ This software (including documentation) is licensed under the GNU GENERAL PUBLIC
 <li><a class="reference internal" href="#using-a-prerolled-genomeplot">Using a prerolled <cite>genomeplot</cite></a></li>
 <li><a class="reference internal" href="#creating-a-custom-genomeplot">Creating a custom <cite>genomeplot</cite></a></li>
 <li><a class="reference internal" href="#source">Source</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
 <li><a class="reference internal" href="#contributing">Contributing</a></li>
 <li><a class="reference internal" href="#license-and-warning">License and warning</a></li>
 <li><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
