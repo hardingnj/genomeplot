@@ -40,31 +40,49 @@ class GenomePlot:
     min_border_right = 10
     major_tick_dist = 1e7
     plot_width_per_mb = 6
+    nrows = None
+    figheight = 200
+    min_contig_size = 1000000
+    min_rows = 2
+    max_rows = 5
 
     @staticmethod
     def chrom_label_func(y):
         return y
 
-    def __init__(self, reference, contigs=None, layout=None, pfunc=None):
+    def __init__(self, reference, contigs=None, layout=None, pfunc=None, nrows=None, min_contig_size=None, min_rows=2, max_rows=6):
 
         try:
             self.genome = pyfaidx.Fasta(reference)
         except pyfaidx.FastaIndexingError:
             self.genome = Reference(pd.read_csv(reference, index_col=0))
 
+        if min_contig_size is not None:
+            self.min_contig_size = min_contig_size
+
         if contigs is None:
-            self.contigs = list(self.genome.keys())
+            self.contigs = [c for c in self.genome.keys() if len(self.genome[c]) > self.min_contig_size]
         else:
             self.contigs = contigs
+
+        if pfunc is not None:
+            self.pfunc = pfunc
+
+        if nrows is not None:
+            print(nrows)
+            self.nrows = nrows
+
+        if min_rows is not None:
+            self.min_rows = min_rows
+
+        if max_rows is not None:
+            self.max_rows = max_rows
 
         # handle layout
         if layout is not None:
             self.layout = self.parse_layout(layout)
         else:
             self.layout = self.auto_layout()
-
-        if pfunc is not None:
-            self.pfunc = pfunc
 
     def parse_layout(self, lstring):
         layout = list()
@@ -84,13 +102,52 @@ class GenomePlot:
             layout.append(r)
         return layout
 
-    def auto_layout(self):
+    @staticmethod
+    def eval_layout(nrows, widths, xspace):
 
-        # TO DO: Yet to complete.
-        for len in self.contigs:
-            pass
+        tot_len = widths.sum()
 
-        return None
+        per_row = tot_len / nrows
+
+        row_x = 0
+        penalty = 0
+        layout_str = ""
+
+        for w in widths:
+            if (row_x + w - xspace) > per_row:
+                # definitely start a new row.
+                layout_str += "|"
+                penalty += (per_row - row_x)
+                row_x = 0
+            else:
+                row_x += w
+
+            layout_str += "o"
+
+        # and last gap.
+        penalty += (per_row - row_x)**2
+
+        # does switching the either or both of the last plots to next row improve the fit?
+        return penalty, layout_str
+
+    def auto_layout(self, space=20):
+
+        contig_lengths = pd.Series([len(self.genome[c]) for c in self.contigs], index=self.contigs, name="length")
+
+        horz_space = contig_lengths.apply(
+            lambda y: y * self.plot_width_per_mb * 1e-6 + self.min_border_left + self.min_border_right + space)
+
+        if self.nrows is None:
+            evals = [self.eval_layout(ix, horz_space, xspace=space)
+                     for ix in range(self.min_rows, self.max_rows + 1)]
+            scores = [x[0] for x in evals]
+            print(scores)
+            best_ix = np.argmin([x[0] for x in evals])
+            layout_str = evals[best_ix][1]
+        else:
+            _, layout_str = self.eval_layout(self.nrows, horz_space, xspace=space)
+
+        return self.parse_layout(layout_str)
 
     def apply(self, func, **kwargs):
 
@@ -118,9 +175,9 @@ class GenomePlot:
                         yrange = None
 
                     s1 = figure(width=px,
+                                plot_height=self.figheight,
                                 min_border_left=self.min_border_left,
                                 min_border_right=self.min_border_right,
-                                plot_height=250,
                                 tools=self.tools,
                                 title=self.chrom_label_func(seqid),
                                 y_range=yrange,
