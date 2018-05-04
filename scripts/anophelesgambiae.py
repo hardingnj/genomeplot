@@ -1,7 +1,7 @@
 import genomeplot
 from bokeh.plotting import output_file
 
-output_file("example.html")
+output_file("example_ag.html")
 
 # First create a GenomePlot instance
 gf = genomeplot.anophelesgambiae.load()
