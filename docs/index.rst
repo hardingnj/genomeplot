@@ -27,7 +27,7 @@ Using a prerolled `genomeplot`
 
 Instances of ``GenomePlot`` representing the genome of three organisms are currently available: `Anopheles gambiae`, `Plasmodium falciparum`, and `Homo Sapiens`.
 If you would like to contribute a prerolled ``GenomePlot``, please see :ref:`contributing`.
-A convenience dummy function :func:`genomeplot.prerolled.util.noiseplot` is available to demonstrate ``GenomePlot`` instances::
+A convenience dummy function :func:`genomeplot.prerolled.util.noiseplot` is available to demonstrate ``GenomePlot`` instances.
 
 .. bokeh-plot:: ../scripts/anophelesgambiae.py
     :source-position: above
@@ -40,7 +40,7 @@ The :class:`genomeplot.GenomePlot` instance is created using the ``.load()`` met
 In this `Homo Sapiens` example, we use another dummy plot function, :func:`genomeplot.util.sineplot`, it simply plots a sine curve over each contig.
 
 .. bokeh-plot:: ../scripts/homosapiens.py
-:source-position: above
+    :source-position: above
 
 Creating a custom `genomeplot`
 ------------------------------
