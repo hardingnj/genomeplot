@@ -41,23 +41,27 @@
 <h2>Using a prerolled <cite>genomeplot</cite><a class="headerlink" href="#using-a-prerolled-genomeplot" title="Permalink to this headline">¶</a></h2>
 <p>Instances of <code class="docutils literal notranslate"><span class="pre">GenomePlot</span></code> representing the genome of three organisms are currently available: <cite>Anopheles gambiae</cite>, <cite>Plasmodium falciparum</cite>, and <cite>Homo Sapiens</cite>.
 If you would like to contribute a prerolled <code class="docutils literal notranslate"><span class="pre">GenomePlot</span></code>, please see <a class="reference internal" href="contributing.html#contributing"><span class="std std-ref">Contributing</span></a>.
-A convenience dummy function <a class="reference internal" href="util/util.html#genomeplot.prerolled.util.noiseplot" title="genomeplot.prerolled.util.noiseplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">genomeplot.prerolled.util.noiseplot()</span></code></a> is available to demonstrate <code class="docutils literal notranslate"><span class="pre">GenomePlot</span></code> instances:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">bokeh</span><span class="o">-</span><span class="n">plot</span><span class="p">::</span> <span class="o">../</span><span class="n">scripts</span><span class="o">/</span><span class="n">anophelesgambiae</span><span class="o">.</span><span class="n">py</span>
+A convenience dummy function <a class="reference internal" href="util/util.html#genomeplot.prerolled.util.noiseplot" title="genomeplot.prerolled.util.noiseplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">genomeplot.prerolled.util.noiseplot()</span></code></a> is available to demonstrate <code class="docutils literal notranslate"><span class="pre">GenomePlot</span></code> instances.</p>
+<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-d67640b56c9d4c9fb556bbf43a82778f.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
+
+<span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example.html&quot;</span><span class="p">)</span>
+
+<span class="c1"># First create a GenomePlot instance</span>
+<span class="n">gf</span> <span class="o">=</span> <span class="n">genomeplot</span><span class="o">.</span><span class="n">anophelesgambiae</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="c1"># Pass in a function to the apply method to make a plot</span>
+<span class="n">gf</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">genomeplot</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">noiseplot</span><span class="p">)</span>
 </pre></div>
 </div>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">source-position:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">above</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-<p>The <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">genomeplot.GenomePlot</span></code></a> instance is created using the <code class="docutils literal notranslate"><span class="pre">.load()</span></code> method. Parameters may still be edited by directly setting the values in the class.</p>
-<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-60e0549eb83a448a889d4b892553fbc0.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+
+<script
+    src="scripts/bokeh-plot-index-external-d67640b56c9d4c9fb556bbf43a82778f.js"
+    id="ec0696d3-489e-4462-bbdd-01663cb05cd5"
+    data-bokeh-model-id="5349f3f0-dca9-45e8-9d17-89eba441b071"
+    data-bokeh-doc-id="23d12a80-fedb-4135-b5a5-6142de3651ab"
+></script><p>The <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">genomeplot.GenomePlot</span></code></a> instance is created using the <code class="docutils literal notranslate"><span class="pre">.load()</span></code> method. Parameters may still be edited by directly setting the values in the class.</p>
+<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-d5fc5a2070bd49b28e0c1d9a1a82024e.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example.html&quot;</span><span class="p">)</span>
@@ -71,18 +75,12 @@ A convenience dummy function <a class="reference internal" href="util/util.html#
 </div>
 
 <script
-    src="scripts/bokeh-plot-index-external-60e0549eb83a448a889d4b892553fbc0.js"
-    id="94118570-9aed-4465-8d60-6318930423f0"
-    data-bokeh-model-id="7b8ccf26-0129-475d-b6f0-75964838a928"
-    data-bokeh-doc-id="aa9325e0-833f-46cd-b033-b65013206788"
+    src="scripts/bokeh-plot-index-external-d5fc5a2070bd49b28e0c1d9a1a82024e.js"
+    id="7b74d1ed-5908-4acf-924e-56cc96d5c16d"
+    data-bokeh-model-id="aae67ed7-26db-4909-90db-7e0085fbee13"
+    data-bokeh-doc-id="65a5163d-cafa-46b6-95fc-b20b23b04d3f"
 ></script><p>In this <cite>Homo Sapiens</cite> example, we use another dummy plot function, <code class="xref py py-func docutils literal notranslate"><span class="pre">genomeplot.util.sineplot()</span></code>, it simply plots a sine curve over each contig.</p>
-
-<script
-    src="scripts/bokeh-plot-index-external-e8f8ec1f0d054a468ced89681038ada3.js"
-    id="0972adc9-1d58-471b-a169-d0a36fae76e2"
-    data-bokeh-model-id="4afb5ec5-44c9-4f16-977e-29055207b0de"
-    data-bokeh-doc-id="f9f62ef7-73cd-4760-982f-7b7983fe9681"
-></script><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-4ec1be0a80a34ca4883e3c6c3605eda5.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example.html&quot;</span><span class="p">)</span>
@@ -94,16 +92,13 @@ A convenience dummy function <a class="reference internal" href="util/util.html#
 <span class="n">gf</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">genomeplot</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">sineplot</span><span class="p">,</span> <span class="n">mb_per_wave</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">source-position:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">above</td>
-</tr>
-</tbody>
-</table>
-</div>
+
+<script
+    src="scripts/bokeh-plot-index-external-4ec1be0a80a34ca4883e3c6c3605eda5.js"
+    id="eb49a7da-2a7d-4e5a-b0f1-f676cd16ae46"
+    data-bokeh-model-id="86066dd4-14b6-438c-b466-701b4268be58"
+    data-bokeh-doc-id="3fcd6b80-41c2-4ebd-8f19-55f47eb88925"
+></script></div>
 <div class="section" id="creating-a-custom-genomeplot">
 <h2>Creating a custom <cite>genomeplot</cite><a class="headerlink" href="#creating-a-custom-genomeplot" title="Permalink to this headline">¶</a></h2>
 <p>First, create a new instance of the <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">genomeplot.GenomePlot</span></code></a> class. The only required argument is a filepath describing the contigs present in the reference genome.
