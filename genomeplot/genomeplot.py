@@ -28,6 +28,9 @@ class Reference:
     def __getitem__(self, arg):
         return self.qq[arg]
 
+    def keys(self):
+        return self.qq.keys()
+
 
 class GenomePlot:
 
