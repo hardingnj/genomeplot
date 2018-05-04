@@ -25,8 +25,9 @@ Alternatively, this package contains a few "prerolled" genome plots, that create
 Using a prerolled `genomeplot`
 ------------------------------
 
-Instances of ``GenomePlot`` representing the genome of two organisms are currently available: `Anopheles gambiae` and `Plasmodium falciparum`.
+Instances of ``GenomePlot`` representing the genome of three organisms are currently available: `Anopheles gambiae`, `Plasmodium falciparum`, and `Homo Sapiens`.
 If you would like to contribute a prerolled ``GenomePlot``, please see :ref:`contributing`.
+A convenience dummy function :func:`genomeplot.prerolled.util.noiseplot` is available to demonstrate ``GenomePlot`` instances::
 
 .. bokeh-plot:: ../scripts/anophelesgambiae.py
     :source-position: above
@@ -35,6 +36,11 @@ The :class:`genomeplot.GenomePlot` instance is created using the ``.load()`` met
 
 .. bokeh-plot:: ../scripts/plasmodiumfalciparum.py
     :source-position: above
+
+In this `Homo Sapiens` example, we use another dummy plot function, :func:`genomeplot.util.sineplot`, it simply plots a sine curve over each contig.
+
+.. bokeh-plot:: ../scripts/homosapiens.py
+:source-position: above
 
 Creating a custom `genomeplot`
 ------------------------------
@@ -52,8 +58,7 @@ Below is a simple example for a generic ``GenomePlot``::
 
 Once instantiated, to make a plot, a plot function is passed to the ``.apply()`` method of :class:`genomeplot.GenomePlot`.
 This function is then applied in turn to each contig, each making a plot which is placed in the grid.
-A convenience dummy function :func:`genomeplot.prerolled.util.noiseplot` is available to test ``GenomePlot`` instances::
-    
+
 	gf.apply(genomeplot.util.noiseplot)
     
 This function simply places a circle with a random ``y`` value at intervals over the genome.
