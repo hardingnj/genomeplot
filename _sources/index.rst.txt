@@ -33,13 +33,14 @@ A convenience dummy function :func:`genomeplot.prerolled.util.noiseplot` is avai
 .. bokeh-plot:: ../scripts/anophelesgambiae.py
     :source-position: above
 
+.. bokeh-plot:: ../scripts/plasmodiumfalciparum.py
+    :source-position: above
+
 In this `Homo Sapiens` example, we use another dummy plot function, :func:`genomeplot.prerolled.util.sineplot`, it simply plots a sine curve over each contig.
 
 .. bokeh-plot:: ../scripts/homosapiens.py
-:source-position: above
-
-.. bokeh-plot:: ../scripts/plasmodiumfalciparum.py
     :source-position: above
+
 
 Creating a custom `genomeplot`
 ------------------------------

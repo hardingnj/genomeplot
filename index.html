@@ -43,7 +43,7 @@
 If you would like to contribute a prerolled <code class="docutils literal notranslate"><span class="pre">GenomePlot</span></code>, please see <a class="reference internal" href="contributing.html#contributing"><span class="std std-ref">Contributing</span></a>.
 The <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">genomeplot.GenomePlot</span></code></a> instance is created using the <code class="docutils literal notranslate"><span class="pre">.load()</span></code> method. Parameters may still be edited by directly setting the values in the class.
 A convenience dummy function <a class="reference internal" href="util/util.html#genomeplot.prerolled.util.noiseplot" title="genomeplot.prerolled.util.noiseplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">genomeplot.prerolled.util.noiseplot()</span></code></a> is available to demonstrate <code class="docutils literal notranslate"><span class="pre">GenomePlot</span></code> instances.</p>
-<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-b67cc538bf3146c79482426cb12ce25e.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-67f1ea60ba204ba783eac48b34a74daf.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example_ag.html&quot;</span><span class="p">)</span>
@@ -57,39 +57,11 @@ A convenience dummy function <a class="reference internal" href="util/util.html#
 </div>
 
 <script
-    src="scripts/bokeh-plot-index-external-b67cc538bf3146c79482426cb12ce25e.js"
-    id="151cbab8-650b-42ff-b8b5-8f6e469e231c"
-    data-bokeh-model-id="8271194a-5e7f-45d1-a8fc-1986357d5330"
-    data-bokeh-doc-id="7a09e8a7-d028-43d5-851b-2fd279ab3f3a"
-></script><p>In this <cite>Homo Sapiens</cite> example, we use another dummy plot function, <code class="xref py py-func docutils literal notranslate"><span class="pre">genomeplot.prerolled.util.sineplot()</span></code>, it simply plots a sine curve over each contig.</p>
-
-<script
-    src="scripts/bokeh-plot-index-external-79c8d2718d1142409c99657f2c809810.js"
-    id="1d26c453-bc24-4aae-bb7d-271fc0879d63"
-    data-bokeh-model-id="51424139-1f26-4cfa-91c7-d6cd8dd00554"
-    data-bokeh-doc-id="1e24d945-252d-46ee-a446-3e52473335bf"
-></script><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
-<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
-
-<span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example_hs.html&quot;</span><span class="p">)</span>
-
-<span class="c1"># First create a GenomePlot instance</span>
-<span class="n">hsap</span> <span class="o">=</span> <span class="n">genomeplot</span><span class="o">.</span><span class="n">homosapiens</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-
-<span class="c1"># Pass in a function to the apply method to make a plot</span>
-<span class="n">hsap</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">genomeplot</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">sineplot</span><span class="p">,</span> <span class="n">mb_per_wave</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">source-position:</th></tr>
-<tr class="field-odd field"><td>&#160;</td><td class="field-body">above</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-8643294db00c4da491337adac28f896f.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+    src="scripts/bokeh-plot-index-external-67f1ea60ba204ba783eac48b34a74daf.js"
+    id="d950835d-72bd-403f-83db-d0c6c89b2dd4"
+    data-bokeh-model-id="7428733b-943a-4b2c-b33a-f0633b67bbc8"
+    data-bokeh-doc-id="f33ae3b3-5522-4b70-8686-e0408a33be85"
+></script><div class="highlight-python notranslate" id="index.bokeh-plot-index-external-3eb9c9e73ce445f891f1d18427c4af9f.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example_hs.html&quot;</span><span class="p">)</span>
@@ -103,10 +75,29 @@ A convenience dummy function <a class="reference internal" href="util/util.html#
 </div>
 
 <script
-    src="scripts/bokeh-plot-index-external-8643294db00c4da491337adac28f896f.js"
-    id="0783e6f8-0dcd-4b40-a1d9-f43f10d0cf7b"
-    data-bokeh-model-id="47453503-092c-48ad-8249-09bd8c2b106a"
-    data-bokeh-doc-id="b6be525e-7141-408a-bbd8-b062b8769a46"
+    src="scripts/bokeh-plot-index-external-3eb9c9e73ce445f891f1d18427c4af9f.js"
+    id="4367614d-2f26-46ca-b16a-4af9cd90e94d"
+    data-bokeh-model-id="ba629412-b8d3-45ad-8f15-54800fa23509"
+    data-bokeh-doc-id="4b5bf312-4a55-4a05-9568-3e284ad78fc9"
+></script><p>In this <cite>Homo Sapiens</cite> example, we use another dummy plot function, <code class="xref py py-func docutils literal notranslate"><span class="pre">genomeplot.prerolled.util.sineplot()</span></code>, it simply plots a sine curve over each contig.</p>
+<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-1adf52a6cd7d4c77abf4bf38fa4d9890.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
+
+<span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example_hs.html&quot;</span><span class="p">)</span>
+
+<span class="c1"># First create a GenomePlot instance</span>
+<span class="n">hsap</span> <span class="o">=</span> <span class="n">genomeplot</span><span class="o">.</span><span class="n">homosapiens</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="c1"># Pass in a function to the apply method to make a plot</span>
+<span class="n">hsap</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">genomeplot</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">sineplot</span><span class="p">,</span> <span class="n">mb_per_wave</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+
+<script
+    src="scripts/bokeh-plot-index-external-1adf52a6cd7d4c77abf4bf38fa4d9890.js"
+    id="b4a033c1-c827-4963-863e-f8eef3cd6ecb"
+    data-bokeh-model-id="bded1230-16e0-4139-9c33-8f7bd8913257"
+    data-bokeh-doc-id="5ed2be9f-ba5a-45cf-ae61-3514475839a4"
 ></script></div>
 <div class="section" id="creating-a-custom-genomeplot">
 <h2>Creating a custom <cite>genomeplot</cite><a class="headerlink" href="#creating-a-custom-genomeplot" title="Permalink to this headline">¶</a></h2>
