@@ -3,6 +3,7 @@
 from genomeplot.genomeplot import GenomePlot
 from bokeh.models import LinearAxis
 import pkg_resources
+import pandas as pd
 
 
 def load():
@@ -12,6 +13,7 @@ def load():
     path = pkg_resources.resource_filename(resource_package, resource_path)
 
     gf = GenomePlot(reference=path,
+                    contigs=pd.read_csv(path, index_col=0).index.tolist(),
                     layout="ooo|oooo|ooooo|ooooo|ooooooo")
 
     gf.plot_width_per_mb = 1
