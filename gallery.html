@@ -33,7 +33,11 @@
             
   <div class="section" id="gallery">
 <span id="id1"></span><h1>Gallery<a class="headerlink" href="#gallery" title="Permalink to this headline">¶</a></h1>
-<p>This will contain more complex examples of the use of <a class="reference external" href="gp">GenomePlot</a>.</p>
+<p>Contains real examples of the use of <a class="reference external" href="gp">GenomePlot</a>.</p>
+<div class="section" id="nucleotide-diversity-in-an-gambiae-from-uganda">
+<h2>Nucleotide diversity in An. gambiae from Uganda<a class="headerlink" href="#nucleotide-diversity-in-an-gambiae-from-uganda" title="Permalink to this headline">¶</a></h2>
+<p>In this example we use data from phase 1 (data release AR3) of the Anopheles gambiae 1000 Genomes study.
+Full details of the dataset are available <a class="reference external" href="http://www.malariagen.net/ag1000g">here</a>.</p>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,14 +97,117 @@
           })();
         </script>
     </body>
-</html></div>
+</html><p>Source code follows. The data mirrors the structure of the FTP site.
+<a class="reference external" href="http://scikit-allel.readthedocs.io/en/latest/">scikit-allel</a> is used to calculate nucleotide diversity in 100 kbp windows.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+
+<span class="kn">from</span> <span class="nn">bokeh.io</span> <span class="kn">import</span> <span class="n">output_file</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="kn">import</span> <span class="n">ColumnDataSource</span><span class="p">,</span> <span class="n">HoverTool</span>
+
+<span class="kn">import</span> <span class="nn">allel</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+
+
+<span class="c1"># Function to draw lines given diversity dataframe</span>
+<span class="k">def</span> <span class="nf">lineplot</span><span class="p">(</span><span class="n">contig</span><span class="p">,</span> <span class="n">subplot</span><span class="p">,</span> <span class="n">is_left</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">is_bottom</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">diversity</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">contig</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">ColumnDataSource</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="n">hover</span> <span class="o">=</span> <span class="n">HoverTool</span><span class="p">(</span>
+        <span class="n">tooltips</span><span class="o">=</span><span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;Position&quot;</span><span class="p">,</span> <span class="s2">&quot;@midpoint{0a.000}&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;pi&quot;</span><span class="p">,</span> <span class="s2">&quot;@pi{0a.00}&quot;</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;contig&quot;</span><span class="p">,</span> <span class="n">contig</span><span class="o">.</span><span class="n">name</span><span class="p">)],</span>
+        <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;mouse&quot;</span><span class="p">)</span>
+
+    <span class="n">subplot</span><span class="o">.</span><span class="n">add_tools</span><span class="p">(</span><span class="n">hover</span><span class="p">)</span>
+
+    <span class="n">subplot</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="s2">&quot;start&quot;</span><span class="p">,</span> <span class="s2">&quot;pi&quot;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">&quot;navy&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">is_left</span><span class="p">:</span>
+        <span class="n">subplot</span><span class="o">.</span><span class="n">yaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\u03A0</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">is_bottom</span><span class="p">:</span>
+        <span class="n">subplot</span><span class="o">.</span><span class="n">xaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;genome position (bp)&quot;</span>
+
+
+<span class="c1"># define release dir on disk</span>
+<span class="n">release_dir</span> <span class="o">=</span> <span class="s2">&quot;../phase1.AR3&quot;</span>
+
+<span class="n">callset_fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="n">release_dir</span><span class="p">,</span>
+    <span class="s2">&quot;variation/main/hdf5/ag1000g.phase1.ar3.pass.h5&quot;</span><span class="p">)</span>
+
+<span class="c1"># open hdf5 object</span>
+<span class="n">callset</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">callset_fn</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+<span class="c1"># read in accessibility data</span>
+<span class="n">access_fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="n">release_dir</span><span class="p">,</span>
+    <span class="s2">&quot;accessibility/accessibility.h5&quot;</span><span class="p">)</span>
+<span class="n">accessibility</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">access_fn</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+<span class="c1"># load the prerolled genomeplot instance</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">genomeplot</span><span class="o">.</span><span class="n">anophelesgambiae</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="c1"># load metadata</span>
+<span class="n">meta</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">release_dir</span><span class="p">,</span> <span class="s2">&quot;samples/samples.meta.txt&quot;</span><span class="p">),</span>
+    <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># identify Ugandan samples</span>
+<span class="n">ugs_samples</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;population == &#39;UGS&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+
+<span class="n">diversity</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># loop through contigs to generate diversity frame</span>
+<span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">contigs</span><span class="p">:</span>
+    <span class="n">gt</span> <span class="o">=</span> <span class="n">allel</span><span class="o">.</span><span class="n">GenotypeChunkedArray</span><span class="p">(</span>
+        <span class="n">callset</span><span class="p">[</span><span class="n">seq</span><span class="p">][</span><span class="s2">&quot;calldata/genotype&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">take</span><span class="p">(</span>
+        <span class="n">ugs_samples</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">allel</span><span class="o">.</span><span class="n">SortedIndex</span><span class="p">(</span><span class="n">callset</span><span class="p">[</span><span class="n">seq</span><span class="p">][</span><span class="s2">&quot;variants/POS&quot;</span><span class="p">])</span>
+    <span class="n">accessible</span> <span class="o">=</span> <span class="n">accessibility</span><span class="p">[</span><span class="n">seq</span><span class="p">][</span><span class="s2">&quot;is_accessible&quot;</span><span class="p">]</span>
+    <span class="n">ac</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">count_alleles</span><span class="p">()</span>
+
+    <span class="n">pi</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">allel</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">windowed_diversity</span><span class="p">(</span>
+        <span class="n">pos</span><span class="p">,</span> <span class="n">ac</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">is_accessible</span><span class="o">=</span><span class="n">accessible</span><span class="p">)</span>
+
+    <span class="n">diversity</span><span class="p">[</span><span class="n">seq</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span>
+        <span class="p">{</span><span class="s2">&quot;pi&quot;</span><span class="p">:</span> <span class="n">pi</span><span class="p">,</span>
+         <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="n">windows</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+         <span class="s2">&quot;stop&quot;</span><span class="p">:</span> <span class="n">windows</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+         <span class="s2">&quot;nbases&quot;</span><span class="p">:</span> <span class="n">bases</span><span class="p">,</span>
+         <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="n">counts</span><span class="p">})</span>
+
+<span class="n">diversity</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">diversity</span><span class="p">)</span>
+<span class="n">diversity</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;chrom&quot;</span>
+<span class="c1"># calculate midpoint</span>
+<span class="n">diversity</span><span class="p">[</span><span class="s2">&quot;midpoint&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">diversity</span><span class="p">[[</span><span class="s2">&quot;start&quot;</span><span class="p">,</span> <span class="s2">&quot;stop&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;uganda.html&quot;</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">lineplot</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Gallery</a><ul>
+<li><a class="reference internal" href="#nucleotide-diversity-in-an-gambiae-from-uganda">Nucleotide diversity in An. gambiae from Uganda</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>

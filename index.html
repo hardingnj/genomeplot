@@ -36,14 +36,15 @@
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">genomeplot</span></code> is a simple convenience wrapper to some <a class="reference external" href="https://bokeh.pydata.org/en/latest/">bokeh</a> functions, streamlining the creation of interactive plots across the genome.</p>
 <p>It is simple to create a plot for any genome, all you need is a genome reference file (<a class="reference external" href="http://genetics.bwh.harvard.edu/pph/FASTA.html">FASTA</a> format).</p>
-<p>Alternatively, this package contains a few “prerolled” genome plots, that create the base figure using the <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">genomeplot.GenomePlot</span></code></a> class.</p>
+<p>For inspiration, check out the <a class="reference internal" href="gallery.html#gallery"><span class="std std-ref">Gallery</span></a>.</p>
+<p>This package contains a few “prerolled” genome plots, that create the base figure using the <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">genomeplot.GenomePlot</span></code></a> class.</p>
 <div class="section" id="using-a-prerolled-genomeplot">
 <h2>Using a prerolled <cite>genomeplot</cite><a class="headerlink" href="#using-a-prerolled-genomeplot" title="Permalink to this headline">¶</a></h2>
 <p>Instances of <code class="docutils literal notranslate"><span class="pre">GenomePlot</span></code> representing the genome of three organisms are currently available: <cite>Anopheles gambiae</cite>, <cite>Plasmodium falciparum</cite>, and <cite>Homo Sapiens</cite>.
 If you would like to contribute a prerolled <code class="docutils literal notranslate"><span class="pre">GenomePlot</span></code>, please see <a class="reference internal" href="contributing.html#contributing"><span class="std std-ref">Contributing</span></a>.
 The <a class="reference internal" href="gp.html#genomeplot.GenomePlot" title="genomeplot.GenomePlot"><code class="xref py py-class docutils literal notranslate"><span class="pre">genomeplot.GenomePlot</span></code></a> instance is created using the <code class="docutils literal notranslate"><span class="pre">.load()</span></code> method. Parameters may still be edited by directly setting the values in the class.
 A convenience dummy function <a class="reference internal" href="util/util.html#genomeplot.prerolled.util.noiseplot" title="genomeplot.prerolled.util.noiseplot"><code class="xref py py-func docutils literal notranslate"><span class="pre">genomeplot.prerolled.util.noiseplot()</span></code></a> is available to demonstrate <code class="docutils literal notranslate"><span class="pre">GenomePlot</span></code> instances.</p>
-<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-bb7bfb69751f4563b151bf614dd4a23d.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-9cce85acbd8043b0bc01b5d32d8ffdee.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example_ag.html&quot;</span><span class="p">)</span>
@@ -57,11 +58,11 @@ A convenience dummy function <a class="reference internal" href="util/util.html#
 </div>
 
 <script
-    src="scripts/bokeh-plot-index-external-bb7bfb69751f4563b151bf614dd4a23d.js"
-    id="a65ef5e7-170c-444a-a867-717e674766f6"
-    data-bokeh-model-id="fd21667c-827d-44a6-b25c-7a45c2c94922"
-    data-bokeh-doc-id="1e567e65-794a-42d0-a244-dbf8eb16de9b"
-></script><div class="highlight-python notranslate" id="index.bokeh-plot-index-external-2c069111dcc34743bd57e461e6b8df6e.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+    src="/scripts/bokeh-plot-index-external-9cce85acbd8043b0bc01b5d32d8ffdee.js"
+    id="917dc964-dc5a-4cbe-af19-b523f98aeb92"
+    data-bokeh-model-id="0c4f3603-2585-4616-b961-feca40459fe5"
+    data-bokeh-doc-id="4fa21577-da67-4ffe-b124-9788f51ce27f"
+></script><div class="highlight-python notranslate" id="index.bokeh-plot-index-external-a8d48b87843844cabf7df51ee16d9fba.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example_hs.html&quot;</span><span class="p">)</span>
@@ -75,12 +76,12 @@ A convenience dummy function <a class="reference internal" href="util/util.html#
 </div>
 
 <script
-    src="scripts/bokeh-plot-index-external-2c069111dcc34743bd57e461e6b8df6e.js"
-    id="6df9ef39-919c-40e4-b87d-2fdbce7c50c8"
-    data-bokeh-model-id="de488447-380f-4dc2-9025-b79e89fab430"
-    data-bokeh-doc-id="56d7371b-6966-4742-b164-81ac1d69c08d"
+    src="/scripts/bokeh-plot-index-external-a8d48b87843844cabf7df51ee16d9fba.js"
+    id="1f90c712-578e-43c0-8cca-aa1661e2ddbc"
+    data-bokeh-model-id="3472f7ea-0101-4a13-871c-c07bac9177df"
+    data-bokeh-doc-id="91c7e6c2-2b51-443c-9998-1db21115e067"
 ></script><p>In this <cite>Homo Sapiens</cite> example, we use another dummy plot function, <code class="xref py py-func docutils literal notranslate"><span class="pre">genomeplot.prerolled.util.sineplot()</span></code>, it simply plots a sine curve over each contig.</p>
-<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-190aae538605465fab2659c043793a8d.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
+<div class="highlight-python notranslate" id="index.bokeh-plot-index-external-89bcb362f1944ba39fe6e71ace51df1b.js"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">genomeplot</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">output_file</span>
 
 <span class="n">output_file</span><span class="p">(</span><span class="s2">&quot;example_hs.html&quot;</span><span class="p">)</span>
@@ -94,10 +95,10 @@ A convenience dummy function <a class="reference internal" href="util/util.html#
 </div>
 
 <script
-    src="scripts/bokeh-plot-index-external-190aae538605465fab2659c043793a8d.js"
-    id="06ffb46c-462a-4c92-a343-cefda3e82909"
-    data-bokeh-model-id="5cf0f724-0ea7-4eb5-b78e-c8a57803ccc2"
-    data-bokeh-doc-id="ba0b5111-712d-45ad-801d-f849e9c92acd"
+    src="/scripts/bokeh-plot-index-external-89bcb362f1944ba39fe6e71ace51df1b.js"
+    id="7f256128-70ca-43dc-ace9-959d60f4bf2c"
+    data-bokeh-model-id="be0319eb-1703-4082-81c5-d3c013dfda5e"
+    data-bokeh-doc-id="c918e0b8-5a3d-40ff-bca2-cef5240a3009"
 ></script></div>
 <div class="section" id="creating-a-custom-genomeplot">
 <h2>Creating a custom <cite>genomeplot</cite><a class="headerlink" href="#creating-a-custom-genomeplot" title="Permalink to this headline">¶</a></h2>
@@ -118,7 +119,7 @@ This function is then applied in turn to each contig, each making a plot which i
 <p>This function simply places a circle with a random <code class="docutils literal notranslate"><span class="pre">y</span></code> value at intervals over the genome.
 Initially it is recommended that noiseplot is used as a template.
 More detailed instructions to creating plotting functions suitable for use with <code class="docutils literal notranslate"><span class="pre">GenomePlot.apply()</span></code> will be available soon.
-More complex examples of use will also be made available in the <a class="reference internal" href="gallery.html#gallery"><span class="std std-ref">Gallery</span></a>.</p>
+More complex examples of use are available in the <a class="reference internal" href="gallery.html#gallery"><span class="std std-ref">Gallery</span></a>.</p>
 </div>
 <div class="section" id="source">
 <h2>Source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h2>
@@ -134,11 +135,10 @@ More complex examples of use will also be made available in the <a class="refere
 </div>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<dl class="docutils">
-<dt>::</dt>
-<dd>bokeh &gt;= 0.12.14
-python &gt;= 3.5</dd>
-</dl>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>bokeh &gt;= 0.12.14
+python &gt;= 3.5
+</pre></div>
+</div>
 </div>
 <div class="section" id="contributing">
 <h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
