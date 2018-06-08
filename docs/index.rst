@@ -20,7 +20,9 @@ Welcome to Genomeplot!
 
 It is simple to create a plot for any genome, all you need is a genome reference file (FASTA_ format).
 
-Alternatively, this package contains a few "prerolled" genome plots, that create the base figure using the :class:`genomeplot.GenomePlot` class.
+For inspiration, check out the :ref:`gallery`.
+
+This package contains a few "prerolled" genome plots, that create the base figure using the :class:`genomeplot.GenomePlot` class.
 
 Using a prerolled `genomeplot`
 ------------------------------
@@ -64,7 +66,7 @@ This function is then applied in turn to each contig, each making a plot which i
 This function simply places a circle with a random ``y`` value at intervals over the genome.
 Initially it is recommended that noiseplot is used as a template.
 More detailed instructions to creating plotting functions suitable for use with ``GenomePlot.apply()`` will be available soon.
-More complex examples of use will also be made available in the :ref:`gallery`.
+More complex examples of use are available in the :ref:`gallery`.
 
 Source
 ------
@@ -83,7 +85,8 @@ Then run::
 Requirements
 ------------
 
-::
+.. code-block:: none
+
     bokeh >= 0.12.14
     python >= 3.5
 
