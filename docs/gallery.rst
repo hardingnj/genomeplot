@@ -6,7 +6,7 @@ Gallery
 Contains real examples of the use of GenomePlot_.
 
 Nucleotide diversity of *An. gambiae* from Uganda
------------------------------------------------
+-------------------------------------------------
 
 In this example we use data from phase 1 (data release AR3) of the *Anopheles gambiae* 1000 Genomes study. 
 Full details of the dataset are available here_.

@@ -59,7 +59,7 @@ Below is a simple example for a generic ``GenomePlot``::
     gf = GenomePlot(fasta_path, contigs=contigs, layout="oo|ooo|oooo")
 
 Once instantiated, to make a plot, a plot function is passed to the ``.apply()`` method of :class:`genomeplot.GenomePlot`.
-This function is then applied in turn to each contig, each making a plot which is placed in the grid.
+This function is then applied in turn to each contig, each making a plot which is placed in the grid.::
 
 	gf.apply(genomeplot.util.noiseplot)
     
