@@ -16,7 +16,7 @@ def load():
     # drop the mt chrom
     plas_contigs = df.query("length > 10000").index.tolist()
 
-    gf = GenomePlot(path, contigs=plas_contigs, layout="ooooo|oooo|ooo|oo")
+    gf = GenomePlot(path, contigs=plas_contigs, layout_string="ooooo|oooo|ooo|oo")
 
     # set some parameters default work better with anopheles
     gf.plot_width_per_mb = 100

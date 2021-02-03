@@ -1,4 +1,5 @@
-from bokeh.plotting import figure, output_notebook, show, gridplot
+from bokeh.plotting import figure, output_notebook, show
+from bokeh.layouts import layout, gridplot
 from bokeh.models.tickers import FixedTicker
 from bokeh.models import NumeralTickFormatter, Range1d, LinearAxis, ColumnDataSource, HoverTool
 
@@ -34,62 +35,48 @@ class Reference:
 
 class GenomePlot:
 
-    genome = None
-    contigs = None
-    tools = "pan,wheel_zoom,box_zoom,save,reset"
-    layout = None
-    pfunc = None
-    min_border_left = 50
-    min_border_right = 10
-    major_tick_dist = 1e7
-    plot_width_per_mb = 6
-    nrows = None
-    figheight = 200
-    min_contig_size = 1000000
-    min_rows = 2
-    max_rows = 5
-
     @staticmethod
     def chrom_label_func(y):
         return y
 
-    def __init__(self, reference, contigs=None, layout=None, pfunc=None, nrows=None, min_contig_size=None, min_rows=2, max_rows=6):
+    def __init__(self, reference, contigs=None, layout_string=None, pfunc=None, nrows=None, min_contig_size=None,
+                 min_rows=2, max_rows=6, tools="pan,wheel_zoom,box_zoom,reset", toolbar_location=None):
+
+
+        self.tools = tools
+        self.min_border_left = 50
+        self.min_border_right = 10
+        self.major_tick_dist = 1e7
+        self.plot_width_per_mb = 6
+        self.figheight = 200
+        self.toolbar_location = toolbar_location
 
         try:
             self.genome = pyfaidx.Fasta(reference)
         except pyfaidx.FastaIndexingError:
             self.genome = Reference(pd.read_csv(reference, index_col=0))
 
-        if min_contig_size is not None:
-            self.min_contig_size = min_contig_size
+        self.min_contig_size = min_contig_size
 
         if contigs is None:
             self.contigs = [c for c in self.genome.keys() if len(self.genome[c]) > self.min_contig_size]
         else:
             self.contigs = contigs
 
-        if pfunc is not None:
-            self.pfunc = pfunc
-
-        if nrows is not None:
-            print(nrows)
-            self.nrows = nrows
-
-        if min_rows is not None:
-            self.min_rows = min_rows
-
-        if max_rows is not None:
-            self.max_rows = max_rows
+        self.pfunc = pfunc
+        self.nrows = nrows
+        self.min_rows = min_rows
+        self.max_rows = max_rows
 
         # handle layout
-        if layout is not None:
-            self.layout = self.parse_layout(layout)
+        if layout_string is not None:
+            self.layout = self.parse_layout(layout_string)
         else:
             self.layout = self.auto_layout()
 
     def parse_layout(self, lstring):
-        layout = list()
-        assert type(lstring) == str, "layout must be a string"
+        layout_def = list()
+        assert type(lstring) == str, "layout_def must be a string"
         q = list(self.contigs)
         q.reverse()
 
@@ -102,8 +89,8 @@ class GenomePlot:
                     r.append(None)
                 else:
                     r.append(q.pop())
-            layout.append(r)
-        return layout
+            layout_def.append(r)
+        return layout_def
 
     @staticmethod
     def eval_layout(nrows, widths, xspace):
@@ -143,8 +130,9 @@ class GenomePlot:
         if self.nrows is None:
             evals = [self.eval_layout(ix, horz_space, xspace=space)
                      for ix in range(self.min_rows, self.max_rows + 1)]
+
             scores = [x[0] for x in evals]
-            print(scores)
+
             best_ix = np.argmin([x[0] for x in evals])
             layout_str = evals[best_ix][1]
         else:
@@ -177,11 +165,12 @@ class GenomePlot:
                     except NameError:
                         yrange = None
 
-                    s1 = figure(width=px,
+                    s1 = figure(plot_width=px,
                                 plot_height=self.figheight,
                                 min_border_left=self.min_border_left,
                                 min_border_right=self.min_border_right,
                                 tools=self.tools,
+                                toolbar_location=self.toolbar_location,
                                 title=self.chrom_label_func(seqid),
                                 y_range=yrange,
                                 x_range=(1, contig_size))
@@ -202,6 +191,8 @@ class GenomePlot:
                     d[i].append(None)
 
         # put the subplots in a grid plot
-        p = gridplot(d, toolbar_location="left", sizing_mode='fixed', plot_width=None)
+        #p = gridplot(d, toolbar_location="left", sizing_mode='fixed', plot_width=None)
+
+        p = layout(d, width_policy="auto", height_policy="auto")
 
         show(p)

@@ -19,7 +19,7 @@ def load():
 
     gf = GenomePlot(reference=path,
                     contigs=("2R", "2L", "3R", "3L", "X"),  # contigs to display in order
-                    layout="oo|ooo",                        # layout string
+                    layout_string="oo|ooo",  # layout string
                     pfunc=anopheles_plot)                   # custom layout function
 
     return gf

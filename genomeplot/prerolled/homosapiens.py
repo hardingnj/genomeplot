@@ -14,7 +14,7 @@ def load():
 
     gf = GenomePlot(reference=path,
                     contigs=pd.read_csv(path, index_col=0).index.tolist(),
-                    layout="ooo|oooo|ooooo|ooooo|ooooooo")
+                    layout_string="ooo|oooo|ooooo|ooooo|ooooooo")
 
     gf.plot_width_per_mb = 1
     gf.major_tick_dist = 5e7
