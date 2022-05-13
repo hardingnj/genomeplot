@@ -2,7 +2,7 @@
 
 ## overview
 
-A simple wrapper to `bokeh`, streamlining genome wide visualisations.
+A simple wrapper to `bokeh`, streamlining genome-wide visualisations.
 
 ## documentation
 
@@ -10,12 +10,11 @@ https://hardingnj.github.io/genomeplot/
 
 ## installation
 
-This package isn't yet stable/mature enough to be put in `conda`/`pypi`, so for the moment please install by either cloning the repo, or downloading the `.tar.gz` from the master branch and extracting. Then run:
+Either via pip:
+`python -m pip install genomeplot`
 
-`python setup.py install`
+or from source using `poetry`
 
 ## requirements
 
-`bokeh >= 0.12.14`
-`python >= 3.5`
-
+See `pyproject.toml`
