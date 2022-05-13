@@ -17,7 +17,7 @@ def load():
 
     path = pkg_resources.resource_filename(resource_package, resource_path)
 
-    gf = GenomePlot(reference=path,
+    gf = GenomePlot(contig_table=path,
                     contigs=("2R", "2L", "3R", "3L", "X"),  # contigs to display in order
                     layout_string="oo|ooo",  # layout string
                     pfunc=anopheles_plot)                   # custom layout function

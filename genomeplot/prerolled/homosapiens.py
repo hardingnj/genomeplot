@@ -12,7 +12,7 @@ def load():
     resource_path = '/'.join(('data', 'homosapiens.txt'))
     path = pkg_resources.resource_filename(resource_package, resource_path)
 
-    gf = GenomePlot(reference=path,
+    gf = GenomePlot(contig_table=path,
                     contigs=pd.read_csv(path, index_col=0).index.tolist(),
                     layout_string="ooo|oooo|ooooo|ooooo|ooooooo")
 

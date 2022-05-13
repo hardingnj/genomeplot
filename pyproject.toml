@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "vspoetry"
+version = "0.4.0"
+description = "A package for simplifying genome-wide plots"
+authors = ["Nick Harding <nickharding@cegx.co.uk>"]
+keywords = ["genome", "plotting", "bioinformatics"]
+readme = "README.md"
+license = "MIT"
+homepage = "https://hardingnj.github.io/genomeplot"
+repository = "https://github.com/hardingnj/genomeplot"
+include = [
+    "LICENSE",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.8,<=3.10"
+bokeh = "~2.4.0"
+pyfaidx = "~0.1.3"
+pandas = "~1.4.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+notebook = "*"
+pre-commit = "*"
+black = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"

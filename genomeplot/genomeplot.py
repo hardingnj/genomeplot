@@ -20,9 +20,12 @@ class Seq:
 
 
 class Reference:
-    qq = OrderedDict()
+    """
+    od is a pandas.DataFrame with a length property
 
+    """
     def __init__(self, od):
+        self.qq = OrderedDict()
         for k, v in od.length.iteritems():
             self.qq[k] = Seq(k, v)
 
@@ -39,9 +42,8 @@ class GenomePlot:
     def chrom_label_func(y):
         return y
 
-    def __init__(self, reference, contigs=None, layout_string=None, pfunc=None, nrows=None, min_contig_size=None,
+    def __init__(self, fasta=None, contig_table=None, contigs=None, layout_string=None, pfunc=None, nrows=None, min_contig_size=None,
                  min_rows=2, max_rows=6, tools="pan,wheel_zoom,box_zoom,reset", toolbar_location=None):
-
 
         self.tools = tools
         self.min_border_left = 50
@@ -51,10 +53,12 @@ class GenomePlot:
         self.figheight = 200
         self.toolbar_location = toolbar_location
 
-        try:
-            self.genome = pyfaidx.Fasta(reference)
-        except pyfaidx.FastaIndexingError:
-            self.genome = Reference(pd.read_csv(reference, index_col=0))
+        if fasta is not None:
+            self.genome = pyfaidx.Fasta(fasta)
+        elif contig_table is not None:
+            self.genome = Reference(pd.read_csv(contig_table, index_col=0))
+        else:
+            raise ValueError("One of fasta or contig_table must be provided")
 
         self.min_contig_size = min_contig_size
 
