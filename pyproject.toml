@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "vspoetry"
+name = "genomeplot"
 version = "0.4.0"
 description = "A package for simplifying genome-wide plots"
 authors = ["Nick Harding <nickharding@cegx.co.uk>"]
